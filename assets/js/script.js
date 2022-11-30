@@ -11,19 +11,20 @@ var $submit = document.getElementById("submit");
 var timeLimit = 60;
 var finish = false;
 
-
+// Object of Score
 var $score = {
   score: 0,
   initial: ''
 }
 
-
+// Object of Quiz
 var quiz = {
   title: "",
   questions: [],
   answer: 0
 }
 
+// Quiz Set
 var quizzes = [
   {
     title: "Inside which HTML element do we put the JavaScript?",
@@ -31,24 +32,24 @@ var quizzes = [
     answer: 0
   },
   {
-    title: "dsdgsdgsdsd?",
-    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
+    title: "Where is the correct place to insert a JavaScript?",
+    questions: ["Both the <head> section and the <body> section are correct", "The <head> section", "The <body> section"],
     answer: 0
   },
   {
-    title: "dgowpopoeklg;lsd?",
-    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
-    answer: 0
+    title: "What is my name?",
+    questions: ["Andrew", "Peter", "Sam", "John"],
+    answer: 1
   },
   {
-    title: "Inside which HTML element do we put the JavaScript?",
-    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
-    answer: 0
+    title: "What is my homework score?",
+    questions: ["0", "50", "80", "100"],
+    answer: 3
   },
   {
-    title: "Final?",
-    questions: ["<scrsdgsdsipt>", "<scriptsdgsding>", "<jsdgds>", "<javasdgsdgscript>"],
-    answer: 0
+    title: "How many children do I have?",
+    questions: ["1", "2", "3", "4","5"],
+    answer: 4
   }
 ];
 
@@ -130,7 +131,7 @@ function nextQuiz() {
 function result() {
   $quiz.setAttribute("hidden", "hidden");
   $result.removeAttribute("hidden");
-  
+
   $score.score = timeLimit;
   document.getElementById("score").textContent = $score.score;
 
@@ -157,40 +158,57 @@ function timeStart() {
 }
 
 
-// Store High Score and Initial
+// Store Sorted Score to the localStorage
 function storeScore(user) {
-  var highScore = JSON.parse(localStorage.getItem("highScore"));
 
-  if (highScore === null) {
-    localStorage.setItem("highScore",JSON.stringify(user));     
+  var index = 0;
+  var highScore = [];
+  var getScore = JSON.parse(localStorage.getItem("highScore"));
+  
+  console.log("get score: " + getScore);
+
+  if (getScore === null) {
+    highScore.push(user);
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+    
+    console.log("highSocre is null");
   } else {
-    if (highScore.score > user.score) {
-      return;
-    } else {
-      localStorage.setItem("highScore",JSON.stringify(user));    
-    } 
-  }   
+    console.log("highSocre is not null");
+    for(var i=0; i<getScore.length; i++){
+      highScore.push(getScore[i]);
+    }
+      
+    for (var i = 0; i < highScore.length; i++) {
+      if (highScore[i].score > user.score) {
+        index++;
+      } else {
+        break;
+      }
+    }
+    highScore.splice(index, 0, user);
+    console.log("Updated highSocre is "+ highScore);
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+  }
 }
 
 
 // Submit inital
-$submit.addEventListener("click", function(event){
+$submit.addEventListener("click", function (event) {
   event.preventDefault();
 
-   var inital = $inital.value;
+  var inital = $inital.value;
 
-   if(inital === ""){
-      var message = "Initals cannot be blank";
-      document.getElementById("message").textContent = message;
-   } else {
-      $score.initial = inital;
-      console.log("initial:"+$score.initial);
-      console.log("score: "+$score.score);
-      console.log($score);
-      storeScore($score);
-      window.location.href = "./highscore.html";
-
-   }
+  if (inital === "") {
+    var message = "Initals cannot be blank";
+    document.getElementById("message").textContent = message;
+  } else {
+    $score.initial = inital;
+    console.log("initial:" + $score.initial);
+    console.log("score: " + $score.score);
+    console.log($score);
+    storeScore($score);
+    window.location.href = "./highscore.html";
+  }
 
 });
 

@@ -16,14 +16,14 @@ body {
 }
 
 .game{
-  flex: 7;
+  flex: 6;
   margin: 100px auto;
   padding: 0 100px;
 
 }
 
 .time{
-  flex: 1;
+  flex: 2;
 
 }
 
@@ -68,6 +68,36 @@ button:hover, .question:hover{
   border-top: 1px solid #b9a76c;;
   padding: 10px 0; 
 
+}
+
+#container{
+
+  width: 400px;
+  margin: 100px auto;
+  display: block;
+  
+}
+#goBack-clear{
+  display: flex;
+  justify-content: space-around;
+}
+
+#high-score{
+  text-align: center;
+}
+
+.li-style{
+  text-decoration: none;
+  padding: 10px;
+
+}
+
+.li-color1 {
+  background: hsl(60, 16%, 80%);
+}
+
+.li-color2{
+  background: #eeeebb;
 }
 
 @media screen and (max-width: 740px) {
