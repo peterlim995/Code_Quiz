@@ -1,188 +1,197 @@
+// Object of quiz
+var quizNumber = 0;
+var $quiz = document.getElementById("quiz");
+var $result = document.getElementById("result");
+var $showQuestions = document.getElementById("questions");
+var $yesNo = document.getElementById("yesNo");
+var $mainPage = document.getElementById("main-page");
+var $inital = document.getElementById("inital");
+var $submit = document.getElementById("submit");
+
+var timeLimit = 60;
+var finish = false;
 
 
-var start = document.getElementById("start");
-// var reset = document.getElementById("reset");
-var time = document.getElementById("timer");
-
-var win = localStorage.getItem("win");
-var lose = localStorage.getItem("lose");
-var wordNumber = 1;
-
-// var letter = "";
-// localStorage.setItem("timeLimit", 10);
-// var limit = localStorage.getItem("timeLimit");
-var limit = 10;
-
-var fiveLetterWord = ["cable", "daddy", "cabin"];//, "eager", "early", "facet"];
-var wordSelect = wordChoice();
+var $score = {
+  score: 0,
+  initial: ''
+}
 
 
-function $ (elementToFind) {
-  return document.querySelector(elementToFind);
-};
-var statue = false;
+var quiz = {
+  title: "",
+  questions: [],
+  answer: 0
+}
 
-function letterReturn(word, num) {
-  // var word = fiveLetterWord.shift();
-
-  var char;
-  if (word !== null) {
-    char = word.substr(num, 1);
+var quizzes = [
+  {
+    title: "Inside which HTML element do we put the JavaScript?",
+    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
+    answer: 0
+  },
+  {
+    title: "dsdgsdgsdsd?",
+    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
+    answer: 0
+  },
+  {
+    title: "dgowpopoeklg;lsd?",
+    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
+    answer: 0
+  },
+  {
+    title: "Inside which HTML element do we put the JavaScript?",
+    questions: ["<script>", "<scripting>", "<js>", "<javascript>"],
+    answer: 0
+  },
+  {
+    title: "Final?",
+    questions: ["<scrsdgsdsipt>", "<scriptsdgsding>", "<jsdgds>", "<javasdgsdgscript>"],
+    answer: 0
   }
-  // console.log(char);
-
-  return char;
-}
-
-function wordChoice() {
-  var word = fiveLetterWord.shift();
-  return word;
-}
+];
 
 
-function winGame() {
-  win++;
-  document.getElementById("win").textContent = win;
-  document.getElementById("win-lose").textContent = "You Win!";
-
-  console.log(endGame());
-  if (!endGame()) {
-    start.textContent = "Re-Start";
-    statue = false;
-    start.setAttribute("style", "display: block")
-  }
-  // resetGame();
-}
-
-function loseGame() {
-  lose++;
-  document.getElementById("lose").textContent = lose;
-  time.textContent = "Time Over!";
-  document.getElementById("win-lose").textContent = "You Lose!";
-  console.log(endGame());
-
-  if (!endGame()) {
-    statue = false;
-    start.textContent = "Re-Start";
-    start.setAttribute("style", "display: block")
-    console.log("lose");
-  }
-}
-
-// Timer Start
-start.addEventListener("click", function () {
-  var timer = setInterval(function () {
-    if (!statue) {
-      resetGame();
-    }
-
-    start.setAttribute("style", "display: none")
-
-    statue = true;
-    limit--;
-    time.textContent = limit;
-    document.getElementById("win-lose").textContent = "Game Start!";
-    if (wordNumber === 6) {
-      clearInterval(timer);
-      winGame();
-      //  resetGame();        
-    }
-
-    if (limit === 0) {
-      clearInterval(timer);
-      loseGame();
-
-    }
-  }, 1000)
-
-})
-
-function endGame() {
-  wordSelect = wordChoice();
-
-  console.log(wordSelect);
-  if (wordSelect === undefined) {
-    document.getElementById("win-lose").textContent = "Game Over";
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function resetGame() {
-
-  // wordSelect = wordChoice();
-
-
-  limit = 10;
-  for (wordNumber = 1; wordNumber < 6; wordNumber++) {
-    var letter = "letter" + wordNumber;
-    document.getElementById(letter).textContent = '';
-    document.getElementById(letter).setAttribute("class", "box");
-  }
-  wordNumber = 1;
-  statue = false;
-  document.getElementById("win-lose").textContent = "";
-  return;
-
-}
-
-
-function inputLetter(event) {
-
-  if (statue) {
-    var correct = event.key;
-    var letter = "letter" + wordNumber;
-
-    if (wordNumber < 6) {
-      document.getElementById(letter).textContent = correct;
-      if (correct === letterReturn(wordSelect, wordNumber - 1)) {
-        document.getElementById(letter).setAttribute("class", "c-box");
-        wordNumber++;
-      }
-    }
-  }
-}
-
-document.addEventListener("keydown", inputLetter);
-
-function init() {
-  resetGame();
-
-}
-
-
-
-
-
-
-
-
-/////////// in addition study
-
-
-function navigate(direction) {
-  index = index + direction;
-  if (index < 0) {
-    index = images.length - 1;
-  } else if (index > images.length - 1) {
-    index = 0;
-  }
-  currentImage = images[index];
-  carousel.style.backgroundImage = "url('" + currentImage + "')";
-}
-
-
-todoList.addEventListener("click", function(event) {
+// Starting page
+$mainPage.addEventListener("click", function (event) {
+  // event.stopPropagation();
   var element = event.target;
-  // TODO: Describe the functionality of the following `if` statement.
-  // when hit the button, remove matched array
-  if (element.matches("button") === true) {
-    var index = element.parentElement.getAttribute("data-index");
-    todos.splice(index, 1);
-    // TODO: What will happen when the following functions are called?
-    // store removed array and show
-    storeTodos();
-    renderTodos();
+
+  if (element.matches("button")) {
+    element.parentElement.setAttribute("hidden", "hidden");
+    renderQuiz();
+    timeStart();
   }
 });
+
+
+// render quiz
+function renderQuiz() {
+
+  $quiz.removeAttribute("hidden");
+
+  quiz = quizzes[quizNumber];
+  document.getElementById("title").textContent = quiz.title;
+
+  for (var i = 0; i < quiz.questions.length; i++) {
+    var question = quiz.questions[i];
+    var li = document.createElement("li");
+    li.textContent = question;
+    li.setAttribute("class", "question");
+    li.setAttribute("data-index", i);
+
+
+    $showQuestions.appendChild(li);
+  }
+}
+
+// select the answer
+$quiz.addEventListener("click", function (event) {
+  // event.stopPropagation();
+  var element = event.target;
+
+  if (element.matches("li")) {
+    if (element.getAttribute("data-index") == quiz.answer) {
+      // console.log("correct");
+      $yesNo.textContent = "Correct";
+      nextQuiz();
+    } else {
+      // console.log("wrong");
+      $yesNo.textContent = "Wrong";
+      timeLimit -= 10;
+      nextQuiz();
+    }
+  } else {
+    console.log("not match");
+  }
+
+
+});
+
+// call next quiz
+function nextQuiz() {
+  quizNumber++;
+  var li = document.querySelectorAll("li");
+  for (var i = 0; i < quiz.questions.length; i++) {
+    li[i].remove();
+  }
+
+  if (quizNumber < quizzes.length)
+    renderQuiz();
+  else {
+    console.log("End");
+    finish = true;
+    result();
+  }
+}
+
+// show the final result
+function result() {
+  $quiz.setAttribute("hidden", "hidden");
+  $result.removeAttribute("hidden");
+  
+  $score.score = timeLimit;
+  document.getElementById("score").textContent = $score.score;
+
+}
+
+// timer 
+function timeStart() {
+  var timer = setInterval(function () {
+    timeLimit--;
+    document.getElementById("timer").textContent = timeLimit;
+
+    if (timeLimit === 0) {
+      clearInterval(timer);
+      result();
+      return timeLimit;
+    }
+
+    if (finish) {
+      clearInterval(timer);
+      return timeLimit;
+    }
+
+  }, 1000);
+}
+
+
+// Store High Score and Initial
+function storeScore(user) {
+  var highScore = JSON.parse(localStorage.getItem("highScore"));
+
+  if (highScore === null) {
+    localStorage.setItem("highScore",JSON.stringify(user));     
+  } else {
+    if (highScore.score > user.score) {
+      return;
+    } else {
+      localStorage.setItem("highScore",JSON.stringify(user));    
+    } 
+  }   
+}
+
+
+// Submit inital
+$submit.addEventListener("click", function(event){
+  event.preventDefault();
+
+   var inital = $inital.value;
+
+   if(inital === ""){
+      var message = "Initals cannot be blank";
+      document.getElementById("message").textContent = message;
+   } else {
+      $score.initial = inital;
+      console.log("initial:"+$score.initial);
+      console.log("score: "+$score.score);
+      console.log($score);
+      storeScore($score);
+      window.location.href = "./highscore.html";
+
+   }
+
+});
+
+

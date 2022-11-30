@@ -6,33 +6,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>Word Guess Game</title>
+  <title>Code Quiz</title>
 </head>
 
 <body>
-  <div class="game">
-    <h1>Word Guess Game</h1>
-    <h1 id="win-lose"></h1>
-    <div class="container">
-      <div class="box" id="letter1" data-number="1" data-state="hidden"></div>
-      <div class="box" id="letter2" data-number="2" data-state="hidden"></div>
-      <div class="box" id="letter3" data-number="3" data-state="hidden"></div>
-      <div class="box" id="letter4" data-number="4" data-state="hidden"></div>
-      <div class="box" id="letter5" data-number="5" data-state="hidden"></div>
+  <div class="container">
+    <div class="high-score">
+      <h4>View High Score</h4>
     </div>
-    <button id="start">Start</button>
-    <!-- <button id="reset">Reset</button> -->
-    <div class="result">
-      <h2>Timer: <span id="timer"></span></h2>
-      <h2></h2>
-      <h2>Total Wins:<span id="win"></span></h2>
-      <h2>Total Loses:<span id="lose"></span></h2>
+    <div class="game">
+      <div id="main-page">
+        <h1> Coding Quiz Challenge</h1>
+        <p> Try to answer the following code-related question within the time limit. Keep in mind that incorrect answers
+          will penalize your score/time by 10 second. </p>
+        </ul>
+        <button>Start Quiz</button>
+      </div>
+      <div id="quiz" hidden>
+        <h2 id="title"></h2>
+        <ul id="questions">
+        </ul>
+        <div>
+          <h3 id="answer"><span id="yesNo"></span></h3>
+        </div>
 
+      </div>
+      <div id="result" hidden>
+        <h1>All done!</h1>
+        <p>Your final score is <span id="score"></span>.</p>
+        <form>
+          <label for="inital">Enter initials: </label>
+          <input type="text" id="inital">
+          <button id="submit">Submit</button>
+        </form>
+        <h3><span id="message"></span></h3>
+      </div>
     </div>
-
+    <div class="time">
+      <h4>Time: <span id="timer"></span></h4>
+    </div>
 
 
   </div>
+
   <script src="./assets/js/script.js"></script>
   <!-- <script src="./assets/js/script1.js"></script> -->
 </body>

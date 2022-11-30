@@ -1,6 +1,4 @@
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
 }
 
@@ -8,6 +6,79 @@ body {
   font-family: sans-serif;
   background-color: #FFFFE0
 }
+
+.container {
+  display: flex;  
+}
+
+.high-score {
+  flex: 2;
+}
+
+.game{
+  flex: 7;
+  margin: 100px auto;
+  padding: 0 100px;
+
+}
+
+.time{
+  flex: 1;
+
+}
+
+h1 {
+  margin: 30px 0;
+}
+
+button, .question {
+  margin: 10px 0;
+  /* float: left; */
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover, .question:hover{
+  background-color: #F082AC;
+}
+
+
+#answer, h3 {
+  border-top: 1px solid #b9a76c;;
+  padding: 10px 0; 
+
+}
+
+@media screen and (max-width: 740px) {
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* 
 
 h1 {
   text-align: center;
@@ -30,7 +101,7 @@ h1 {
   width:19%;
   height: 200px;
   margin: 1%;
-  /* cursor: pointer; */
+  cursor: pointer;
   object-fit: cover;
   border-radius: 8px;
   background-color: #093145;
@@ -44,7 +115,7 @@ h1 {
   width:19%;
   height: 200px;
   margin: 1%;
-  /* cursor: pointer; */
+  cursor: pointer;
   object-fit: cover;
   border-radius: 8px;
   background-color: #093145;
@@ -80,4 +151,4 @@ button {
   .box {
     width: 48%;
   }
-}
+} */
