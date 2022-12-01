@@ -11,9 +11,12 @@
 
 <body>
   <div class="container">
+    <!-- High Score Link -->
     <div class="high-score">
       <h4> <a href="./highscore.html"> View High Score </a></h4>
     </div>
+
+    <!-- Main Game -->
     <div class="game">
       <div id="main-page">
         <h1> Coding Quiz Challenge</h1>
@@ -34,14 +37,16 @@
       <div id="result" hidden>
         <h1>All done!</h1>
         <p>Your final score is <span id="score"></span>.</p>
-        <form>
+        <form id="submit">
           <label for="inital">Enter initials: </label>
           <input type="text" id="inital">
-          <button id="submit">Submit</button>
+          <button >Submit</button>
         </form>
         <h3><span id="message"></span></h3>
       </div>
     </div>
+
+    <!-- Time Limit -->
     <div class="time">
       <h4>Time: <span id="timer"></span></h4>
     </div>
